@@ -3,11 +3,12 @@ extends layout
 block content
   h1= title
   
-  ul
+  table
     each book in book_list
-      li 
-        a(href=book.url) #{book.title} 
-        |  (#{book.author.name})
-
+      tr
+        td 
+          a(href=book.url) #{book.title} 
+        td (#{book.author.name})
+      tr
     else
-      li There are no books
+      li There are no authors.

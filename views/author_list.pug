@@ -2,12 +2,14 @@ extends layout
 
 block content
   h1= title
-  
-  ul
-    each author in author_list
-      li 
-        a(href=author.url) #{author.name} 
-        |  (#{author.date_of_birth} - #{author.date_of_death})
 
+  table
+    each author in author_list
+      tr
+        td 
+          a(href=author.url) #{author.name}
+        td #{author.date_of_birth}
+        td #{author.date_of_death}
+      tr
     else
       li There are no authors.
