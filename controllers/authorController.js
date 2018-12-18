@@ -7,7 +7,6 @@ const { sanitizeBody } = require('express-validator/filter');
 
 // Display list of all Authors.
 exports.author_list = function (req, res, next) {
-
     Author.find()
         .sort([['family_name', 'ascending']])
         .exec(function (err, list_authors) {
@@ -20,7 +19,6 @@ exports.author_list = function (req, res, next) {
 
 // Display detail page for a specific Author.
 exports.author_detail = function (req, res, next) {
-
     async.parallel({
         author: function (callback) {
             Author.findById(req.params.id)
@@ -40,7 +38,6 @@ exports.author_detail = function (req, res, next) {
         // Successful, so render.
         res.render('author_detail', { title: 'Author Detail', author: results.author, author_books: results.authors_books });
     });
-
 };
 
 // Display Author create form on GET.
@@ -50,7 +47,6 @@ exports.author_create_get = function (req, res, next) {
 
 // Handle Author create on POST.
 exports.author_create_post = [
-
     // Validate fields.
     body('first_name').isLength({ min: 1 }).trim().withMessage('First name must be specified.')
         .isAlphanumeric().withMessage('First name has non-alphanumeric characters.'),
@@ -67,7 +63,6 @@ exports.author_create_post = [
 
     // Process request after validation and sanitization.
     (req, res, next) => {
-
         // Extract the validation errors from a request.
         const errors = validationResult(req);
 
@@ -75,13 +70,10 @@ exports.author_create_post = [
             // There are errors. Render form again with sanitized values/errors messages.
             res.render('author_form', { title: 'Create Author', author: req.body, errors: errors.array() });
             return;
-        }
-        else {
+        } else {
             // Data from form is valid.
-
             // Create an Author object with escaped and trimmed data.
-            var author = new Author(
-                {
+            var author = new Author({
                     first_name: req.body.first_name,
                     family_name: req.body.family_name,
                     date_of_birth: req.body.date_of_birth,
@@ -98,7 +90,6 @@ exports.author_create_post = [
 
 // Display Author delete form on GET.
 exports.author_delete_get = function (req, res, next) {
-
     async.parallel({
         author: function (callback) {
             Author.findById(req.params.id).exec(callback)
@@ -114,12 +105,10 @@ exports.author_delete_get = function (req, res, next) {
         // Successful, so render.
         res.render('author_delete', { title: 'Delete Author', author: results.author, author_books: results.authors_books });
     });
-
 };
 
 // Handle Author delete on POST.
 exports.author_delete_post = function (req, res, next) {
-
     async.parallel({
         author: function (callback) {
             Author.findById(req.body.authorid).exec(callback)
@@ -134,23 +123,19 @@ exports.author_delete_post = function (req, res, next) {
             // Author has books. Render in same way as for GET route.
             res.render('author_delete', { title: 'Delete Author', author: results.author, author_books: results.authors_books });
             return;
-        }
-        else {
+        } else {
             // Author has no books. Delete object and redirect to the list of authors.
             Author.findByIdAndRemove(req.body.authorid, function deleteAuthor(err) {
                 if (err) { return next(err); }
                 // Success - go to author list.
                 res.redirect('/catalog/authors')
             })
-
         }
     });
-
 };
 
 // Display Author update form on GET.
 exports.author_update_get = function (req, res, next) {
-
     Author.findById(req.params.id, function (err, author) {
         if (err) { return next(err); }
         if (author == null) { // No results.
@@ -160,13 +145,11 @@ exports.author_update_get = function (req, res, next) {
         }
         // Success.
         res.render('author_form', { title: 'Update Author', author: author });
-
     });
 };
 
 // Handle Author update on POST.
 exports.author_update_post = [
-
     // Validate fields.
     body('first_name').isLength({ min: 1 }).trim().withMessage('First name must be specified.')
         .isAlphanumeric().withMessage('First name has non-alphanumeric characters.'),
@@ -183,13 +166,10 @@ exports.author_update_post = [
 
     // Process request after validation and sanitization.
     (req, res, next) => {
-
         // Extract the validation errors from a request.
         const errors = validationResult(req);
-
         // Create Author object with escaped and trimmed data (and the old id!)
-        var author = new Author(
-            {
+        var author = new Author({
                 first_name: req.body.first_name,
                 family_name: req.body.family_name,
                 date_of_birth: req.body.date_of_birth,
@@ -197,13 +177,11 @@ exports.author_update_post = [
                 _id: req.params.id
             }
         );
-
         if (!errors.isEmpty()) {
             // There are errors. Render the form again with sanitized values and error messages.
             res.render('author_form', { title: 'Update Author', author: author, errors: errors.array() });
             return;
-        }
-        else {
+        } else {
             // Data from form is valid. Update the record.
             Author.findByIdAndUpdate(req.params.id, author, {}, function (err, theauthor) {
                 if (err) { return next(err); }

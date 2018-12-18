@@ -10,4 +10,9 @@ router.get('/cool', function(req, res, next) {
   res.send("You're so cool!");
 });
 
+//INFO PAGE
+router.get('/info', function(req, res, next){
+  res.render('info', { title: 'Info page'});
+});
+
 module.exports = router;
