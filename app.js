@@ -8,6 +8,11 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var catalogRouter = require('./routes/catalog');
 
+//REST api
+var book = require('./routes/rest/bookResource');
+var bookinstance = require('./routes/rest/bookinstanceResource');
+var author = require('./routes/rest/authorResource');
+
 var app = express();
 
 //DB Setup start
@@ -36,6 +41,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/catalog', catalogRouter);
+//REST api
+app.use('/api/book', book);
+app.use('/api/bookinstance', bookinstance);
+app.use('/api/author', author);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
