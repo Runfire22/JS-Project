@@ -40,13 +40,27 @@ html(lang='en')
               li
                 a(href='/users/info') Info page
               hr
-              p REST api
+              p REST api (ser ikke så pænt ud)
               li
-                a(href='/api/author') Få alle forfattere
+                a(href='/api/book') Alle bøger
               li
-                a(href='/api/book') Få alle bøger
+                a(href='/api/author') Alle forfattere
               li
-                a(href='/api/bookinstance') Få alle bog instanser
+                a(href='/api/bookinstance') Alle bog instanser
+              p Bøger fundet med isbn
+              li
+                a(href='/api/book/9781473211896') Title: The Name of the Wind
+              li
+                a(href='/api/book/9780756411336') Title: The Slow Regard of Silent Things 
+              li
+                a(href='/api/book/9780765379528') Title: Apes and Angels
+              p Forfattere fundet med efternavn
+              li
+                a(href='/api/author/Asimov') Få forfatter med efternavn
+              li
+                a(href='/api/author/Bova') Få forfatter med efternavn
+              li
+                a(href='/api/author/Rothfuss') Få forfatter med efternavn
 
         div(class='col-sm-10')
           block content

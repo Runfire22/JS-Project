@@ -16,4 +16,13 @@ router.get('/', function(req, res){
     });
 });
 
+router.get('/:isbn', function(req, res){
+    bookFacade.findByISBN(req.params.isbn)
+    .then(bookFound => {
+        if(!bookFound){return res.status(404).end();}
+        return res.status(200).json(bookFound);
+    })
+    .catch(error => next(error));   
+});
+
 module.exports = router;

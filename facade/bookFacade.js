@@ -8,6 +8,11 @@ function getAllBooks(callback){
     });
 }
 
+function findByISBN(isbn){
+    return Book.findOne({isbn: isbn}).exec();
+}
+
 module.exports = {
-    getAllBooks: getAllBooks
+    getAllBooks: getAllBooks,
+    findByISBN: findByISBN
 }

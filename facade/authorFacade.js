@@ -8,6 +8,11 @@ function getAllAuthors(callback){
     });
 }
 
+function findByFamilyName(family_name){
+    return Author.findOne({family_name: family_name}).exec();
+}
+
 module.exports = {
-    getAllAuthors: getAllAuthors
+    getAllAuthors: getAllAuthors,
+    findByFamilyName: findByFamilyName
 }

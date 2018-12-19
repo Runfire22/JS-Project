@@ -16,4 +16,13 @@ router.get('/', function(req, res){
     });
 });
 
+router.get('/:family_name', function(req, res){
+    authorFacade.findByFamilyName(req.params.family_name)
+    .then(authorFound => {
+        if(!authorFound){return res.status(404).end();}
+        return res.status(200).json(authorFound);
+    })
+    .catch(error => next(error));   
+});
+
 module.exports = router;
