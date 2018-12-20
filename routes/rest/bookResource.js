@@ -25,4 +25,25 @@ router.get('/:isbn', function(req, res){
     .catch(error => next(error));   
 });
 
+router.post('/addbook', function(req, res){
+    var data = [
+        req.body.title,
+        req.body.author,
+        req.body.summary,
+        req.body.isbn
+    ]
+    bookFacade.addBook(data[0], data[1], data[2], data[3],
+        function(error, result){
+            if (error) {
+                console.error(error);
+                res.statusCode = 403;
+                return res.json({
+                    errors: ['{msg: "Book cannot be added to database", status: 403}']
+                });
+            }
+            res.statusCode = 201;
+            res.json(result);
+        });
+});
+
 module.exports = router;
