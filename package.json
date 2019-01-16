@@ -7,10 +7,13 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "devstart": "nodemon ./bin/www"
+    "devstart": "nodemon ./bin/www",
+    "client": "npm start --prefix client",
+    "spastart": "concurrently \"npm run start\" \"npm run client\""
   },
   "dependencies": {
     "async": "^2.6.1",
+    "concurrently": "^4.1.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.16.0",

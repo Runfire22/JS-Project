@@ -9,7 +9,6 @@ const { sanitizeBody } = require('express-validator/filter');
 var async = require('async');
 
 exports.index = function(req, res) {
-
     async.parallel({
         book_count: function(callback) {
             Book.count(callback);
@@ -31,7 +30,6 @@ exports.index = function(req, res) {
     });
 };
 
-
 // Display list of all books.
 exports.book_list = function(req, res, next) {
 
@@ -40,7 +38,7 @@ exports.book_list = function(req, res, next) {
     .exec(function (err, list_books) {
       if (err) { return next(err); }
       // Successful, so render
-      res.render('book_list', { title: 'Book List', book_list:  list_books});
+      res.json('book_list', { title: 'Book List', book_list:  list_books});
     });
 
 };
@@ -165,8 +163,6 @@ exports.book_create_post = [
     }
 ];
 
-
-
 // Display book delete form on GET.
 exports.book_delete_get = function(req, res, next) {
 
@@ -255,7 +251,6 @@ exports.book_update_get = function(req, res, next) {
         });
 
 };
-
 
 // Handle book update on POST.
 exports.book_update_post = [
